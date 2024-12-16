@@ -1,0 +1,51 @@
+version: '3.9'
+networks:
+  internal_UJJigBWx:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.238.0/24
+      driver: default
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_HOST: postgres
+    ports:
+      - '5437:5437'
+    volumes:
+      - addressbook-db:/var/lib/postgresql/data
+    networks:
+      internal_UJJigBWx:
+        ipv4_address: ${POSTGRES_HOST_SERVER}
+
+  back:
+    image: node:20.6.0
+    container_name: back
+    volumes:
+      - ./:/usr/current/app
+      - ./node_modules:/usr/current/app/node_modules:cached
+    working_dir: '/usr/current/app'
+    env_file: [./.env]
+    ports: ['${SERVER_PORT}:3001']
+    command:
+      - sh
+      - -c
+      - |
+        npm run db:migrate
+        npx ts-node ./node_modules/sequelize-cli/lib/sequelize db:seed:all
+        npm run start:dev
+    depends_on:
+      - postgres
+    networks:
+      internal_UJJigBWx:
+        ipv4_address: ${SERVER_HOST}
+
+volumes:
+  addressbook-db:
+    driver: local

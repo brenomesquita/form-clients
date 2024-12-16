@@ -1,0 +1,8 @@
+{
+  "eslint.enable": true,
+  "eslint.run": "onType",
+  "eslint.validate": ["javascript", "typescript", "javascriptreact", "typescriptreact"],
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+  "prettier.requireConfig": true,
+  "editor.formatOnSave": true
+}

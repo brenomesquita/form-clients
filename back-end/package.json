@@ -1,0 +1,67 @@
+{
+  "name": "back-end",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.ts",
+  "scripts": {
+    "sequelize": "node --require ts-node/register ./node_modules/sequelize-cli/lib/sequelize",
+    "db:migrate": "npm run sequelize db:migrate",
+    "db:migrate:undo": "npm run sequelize db:migrate:undo",
+    "migration:generate": "npm run sequelize migration:generate --name",
+    "seed:generate": "npm run sequelize seed:generate --name",
+    "pm2:start": "pm2 start build/server.js -i max",
+    "pm2:stop": "pm2 stop build/server.js",
+    "build": "tsc",
+    "start:build": "node build/server.js",
+    "start:dev": "nodemon -L --exec 'ts-node server.ts' -e ts",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "climem": "npx climem 8999",
+    "loadtest": "npx autocannon -c 100 -p 10 -d 10 -m 'POST' http://localhost:3001/api/health --renderStatusCodes"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.5.0",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "node-cache": "^5.1.2",
+    "pg": "^8.11.3",
+    "sequelize": "^6.37.5",
+    "supertest": "^7.0.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.14",
+    "@types/express": "^4.17.17",
+    "@types/express-fileupload": "^1.4.1",
+    "@types/jest": "^29.5.14",
+    "@types/jsonwebtoken": "^9.0.3",
+    "@types/multer": "^1.4.7",
+    "@types/node": "^20.5.9",
+    "@types/sequelize": "^4.28.20",
+    "@types/supertest": "^6.0.2",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^8.10.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "jest": "^29.7.0",
+    "nodemon": "^3.0.1",
+    "pm2": "^5.3.0",
+    "prettier": "^3.4.2",
+    "sequelize-cli": "^6.6.2",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^4.9.5"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "node_modules"
+    ]
+  }
+}
